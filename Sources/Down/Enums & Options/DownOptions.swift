@@ -42,7 +42,7 @@ public struct DownOptions: OptionSet {
     /// Note: this is the default option as of cmark v0.29.0. Use `unsafe`
     ///       to disable this behavior.
 
-    public static let safe = DownOptions(rawValue: CMARK_OPT_SAFE)
+    // public static let safe = DownOptions(rawValue: CMARK_OPT_SAFE)
 
     /// Render raw HTML and unsafe links (`javascript:`, `vbscript:`,
     /// `file:`, and `data:`, except for `image/png`, `image/gif`,

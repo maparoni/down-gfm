@@ -110,6 +110,10 @@ public class DebugVisitor: Visitor {
         return reportWithChildren(node)
     }
 
+    public func visit(strikethrough node: Strikethrough) -> String {
+        return reportWithChildren(node)
+    }
+
     public func visit(strong node: Strong) -> String {
         return reportWithChildren(node)
     }

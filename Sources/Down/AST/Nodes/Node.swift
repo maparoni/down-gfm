@@ -69,6 +69,10 @@ public extension CMarkNode {
         case CMARK_NODE_STRONG:         return Strong(cmarkNode: self)
         case CMARK_NODE_LINK:           return Link(cmarkNode: self)
         case CMARK_NODE_IMAGE:          return Image(cmarkNode: self)
+        
+        // GFM
+        case CMARK_NODE_STRIKETHROUGH:  return Strikethrough(cmarkNode: self)
+
         default:                        return nil
         }
     }

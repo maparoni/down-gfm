@@ -33,6 +33,7 @@ public protocol Visitor {
     func visit(htmlInline node: HtmlInline) -> Result
     func visit(customInline node: CustomInline) -> Result
     func visit(emphasis node: Emphasis) -> Result
+    func visit(strikethrough node: Strikethrough) -> Result
     func visit(strong node: Strong) -> Result
     func visit(link node: Link) -> Result
     func visit(image node: Image) -> Result
@@ -65,6 +66,7 @@ extension Visitor {
             case let child as Strong:         return visit(strong: child)
             case let child as Link:           return visit(link: child)
             case let child as Image:          return visit(image: child)
+            case let child as Strikethrough:  return visit(strikethrough: child)
             default:
                 assertionFailure("Unexpected child")
                 return nil

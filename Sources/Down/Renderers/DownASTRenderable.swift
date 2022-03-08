@@ -71,17 +71,44 @@ public struct DownASTRenderer {
     /// - Throws:
     ///     `MarkdownToASTError` if conversion fails.
     public static func stringToAST(_ string: String, options: DownOptions = .default) throws -> CMarkNode {
+        
+        // enable GFM extensions
+        cmark_gfm_core_extensions_ensure_registered()
+        let parser: UnsafeMutablePointer<cmark_parser> = cmark_parser_new(options.rawValue)
+        defer {
+            cmark_parser_free(parser)
+        }
+        
+        var ext: UnsafeMutablePointer<cmark_syntax_extension>;
+        
+//        ext = cmark_find_syntax_extension("tagfilter")
+//        cmark_parser_attach_syntax_extension(parser, ext)
+//
+//        ext = cmark_find_syntax_extension("autolink")
+//        cmark_parser_attach_syntax_extension(parser, ext)
+        
+        ext = cmark_find_syntax_extension("strikethrough")
+        cmark_parser_attach_syntax_extension(parser, ext)
+        
+//        ext = cmark_find_syntax_extension("tasklist")
+//        cmark_parser_attach_syntax_extension(parser, ext)
+//
+//        ext = cmark_find_syntax_extension("table")
+//        cmark_parser_attach_syntax_extension(parser, ext)
+        
         var tree: CMarkNode?
-
+        
         string.withCString {
             let stringLength = Int(strlen($0))
-            tree = cmark_parse_document($0, stringLength, options.rawValue)
+            // tree = cmark_parse_document($0, stringLength, options.rawValue)
+            cmark_parser_feed(parser, $0, stringLength)
+            tree = cmark_parser_finish(parser)
         }
-
+        
         guard let ast = tree else {
             throw DownErrors.markdownToASTError
         }
-
+        
         return ast
     }
 

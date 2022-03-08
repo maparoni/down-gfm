@@ -5,7 +5,8 @@
 extern "C" {
 #endif
 
-#include "cmark.h"
+#include "cmark-gfm.h"
+#include "memory.h"
 
 typedef struct {
   cmark_event_type ev_type;
