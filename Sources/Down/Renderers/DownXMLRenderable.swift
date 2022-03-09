@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 public protocol DownXMLRenderable: DownRenderable {
 
@@ -29,7 +29,7 @@ extension DownXMLRenderable {
     ///     `DownErrors` depending on the scenario.
 
     public func toXML(_ options: DownOptions = .default) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(markdownString, options: options)
+        let ast = try DownASTRenderer.stringToNode(markdownString, options: options)
         let xml = try DownXMLRenderer.astToXML(ast, options: options)
         cmark_node_free(ast)
         return xml
@@ -53,7 +53,7 @@ public struct DownXMLRenderer {
     /// - Throws:
     ///     `ASTRenderingError` if the AST could not be converted.
 
-    public static func astToXML(_ ast: CMarkNode, options: DownOptions = .default) throws -> String {
+    public static func astToXML(_ ast: UnsafeMutablePointer<cmark_node>, options: DownOptions = .default) throws -> String {
         guard let cXMLString = cmark_render_xml(ast, options.rawValue) else {
             throw DownErrors.astRenderingError
         }

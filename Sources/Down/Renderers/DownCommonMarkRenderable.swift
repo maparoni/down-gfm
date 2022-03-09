@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 public protocol DownCommonMarkRenderable: DownRenderable {
 
@@ -30,7 +30,7 @@ extension DownCommonMarkRenderable {
     ///     `DownErrors` depending on the scenario.
 
     public func toCommonMark(_ options: DownOptions = .default, width: Int32 = 0) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(markdownString, options: options)
+        let ast = try DownASTRenderer.stringToNode(markdownString, options: options)
         let commonMark = try DownCommonMarkRenderer.astToCommonMark(ast, options: options, width: width)
         cmark_node_free(ast)
         return commonMark
@@ -55,9 +55,7 @@ public struct DownCommonMarkRenderer {
     /// - Throws:
     ///     `ASTRenderingError` if the AST could not be converted.
 
-    public static func astToCommonMark(_ ast: CMarkNode,
-                                       options: DownOptions = .default,
-                                       width: Int32 = 0) throws -> String {
+    public static func astToCommonMark(_ ast: UnsafeMutablePointer<cmark_node>, options: DownOptions = .default, width: Int32 = 0) throws -> String {
 
         guard let cCommonMarkString = cmark_render_commonmark(ast, options.rawValue, width) else {
             throw DownErrors.astRenderingError

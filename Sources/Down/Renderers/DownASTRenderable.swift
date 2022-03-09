@@ -7,11 +7,14 @@
 //
 
 import Foundation
-import libcmark
+
+import cmark_gfm
+import cmark_gfm_extensions
+import Markdown
 
 public protocol DownASTRenderable: DownRenderable {
 
-    func toAST(_ options: DownOptions) throws -> CMarkNode
+    func toDocument(_ options: DownOptions) -> Document
 
 }
 
@@ -28,8 +31,8 @@ extension DownASTRenderable {
     /// - Throws:
     /// `MarkdownToASTError` if conversion fails.
 
-    public func toAST(_ options: DownOptions = .default) throws -> CMarkNode {
-        return try DownASTRenderer.stringToAST(markdownString, options: options)
+    func toAST(_ options: DownOptions = .default) throws -> UnsafeMutablePointer<cmark_node> {
+        return try DownASTRenderer.stringToNode(markdownString, options: options)
     }
 
     /// Parses the `markdownString` property into an abstract syntax tree and returns the root `Document` node.
@@ -43,14 +46,8 @@ extension DownASTRenderable {
     /// - Throws:
     ///     `MarkdownToASTError` if conversion fails.
 
-    public func toDocument(_ options: DownOptions = .default) throws -> Document {
-        let tree = try toAST(options)
-
-        guard tree.type == CMARK_NODE_DOCUMENT else {
-            throw DownErrors.astRenderingError
-        }
-
-        return Document(cmarkNode: tree)
+    public func toDocument(_ options: DownOptions = .default) -> Document {
+        return Document(parsing: markdownString)
     }
 
 }
@@ -70,7 +67,7 @@ public struct DownASTRenderer {
     ///
     /// - Throws:
     ///     `MarkdownToASTError` if conversion fails.
-    public static func stringToAST(_ string: String, options: DownOptions = .default) throws -> CMarkNode {
+    static func stringToNode(_ string: String, options: DownOptions = .default) throws -> UnsafeMutablePointer<cmark_node> {
         
         // enable GFM extensions
         cmark_gfm_core_extensions_ensure_registered()
@@ -81,22 +78,22 @@ public struct DownASTRenderer {
         
         var ext: UnsafeMutablePointer<cmark_syntax_extension>;
         
-//        ext = cmark_find_syntax_extension("tagfilter")
-//        cmark_parser_attach_syntax_extension(parser, ext)
-//
-//        ext = cmark_find_syntax_extension("autolink")
-//        cmark_parser_attach_syntax_extension(parser, ext)
+        ext = cmark_find_syntax_extension("tagfilter")
+        cmark_parser_attach_syntax_extension(parser, ext)
+
+        ext = cmark_find_syntax_extension("autolink")
+        cmark_parser_attach_syntax_extension(parser, ext)
         
         ext = cmark_find_syntax_extension("strikethrough")
         cmark_parser_attach_syntax_extension(parser, ext)
         
-//        ext = cmark_find_syntax_extension("tasklist")
-//        cmark_parser_attach_syntax_extension(parser, ext)
-//
-//        ext = cmark_find_syntax_extension("table")
-//        cmark_parser_attach_syntax_extension(parser, ext)
+        ext = cmark_find_syntax_extension("tasklist")
+        cmark_parser_attach_syntax_extension(parser, ext)
+
+        ext = cmark_find_syntax_extension("table")
+        cmark_parser_attach_syntax_extension(parser, ext)
         
-        var tree: CMarkNode?
+        var tree: UnsafeMutablePointer<cmark_node>?
         
         string.withCString {
             let stringLength = Int(strlen($0))
@@ -110,6 +107,10 @@ public struct DownASTRenderer {
         }
         
         return ast
+    }
+    
+    public static func stringToAST(_ string: String, options: DownOptions = .default) -> Document {
+        return Document(parsing: string)
     }
 
 }

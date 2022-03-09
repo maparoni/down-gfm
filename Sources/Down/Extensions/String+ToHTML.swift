@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 extension String {
 
@@ -22,7 +22,7 @@ extension String {
     ///     `DownErrors` depending on the scenario.
 
     public func toHTML(_ options: DownOptions = .default) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(self, options: options)
+        let ast = try DownASTRenderer.stringToNode(self, options: options)
         let html = try DownHTMLRenderer.astToHTML(ast, options: options)
         cmark_node_free(ast)
         return html

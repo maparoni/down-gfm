@@ -1,4 +1,0 @@
-module libcmark [system][extern_c] {
-    header "libcmark.h"
-    export *
-}
