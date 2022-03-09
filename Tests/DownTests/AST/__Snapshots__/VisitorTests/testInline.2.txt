@@ -1,10 +1,10 @@
 Document
-    ↳ Paragraph
-        ↳ Text - Text 
-        ↳ Strong
-            ↳ Text - strong 
-            ↳ Emphasis
-                ↳ Text - emphasis 
-                ↳ Code - code
-                ↳ Text -  
-                ↳ Html Inline - <html>
+└─ Paragraph
+   ├─ Text "Text "
+   └─ Strong
+      ├─ Text "strong "
+      └─ Emphasis
+         ├─ Text "emphasis "
+         ├─ InlineCode `code`
+         ├─ Text " "
+         └─ InlineHTML <html>

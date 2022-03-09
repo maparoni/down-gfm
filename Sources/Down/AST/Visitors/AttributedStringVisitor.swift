@@ -15,14 +15,16 @@ import Markdown
 /// represented at each node and uses an instance of `Styler` to apply the visual attributes.
 /// These substrings are joined together to produce the final result.
 
+public typealias ListPrefixGeneratorBuilder = (List) -> ListItemPrefixGenerator
+
 public struct AttributedStringVisitor {
 
     // MARK: - Properties
 
     private let styler: Styler
     private let options: DownOptions
-//    private let listPrefixGeneratorBuilder: ListPrefixGeneratorBuilder
-//    private var listPrefixGenerators = [ListItemPrefixGenerator]()
+    private let listPrefixGeneratorBuilder: ListPrefixGeneratorBuilder
+    private var listPrefixGenerators = [ListItemPrefixGenerator]()
 
     /// Creates a new instance with the given styler and options.
     ///
@@ -33,12 +35,12 @@ public struct AttributedStringVisitor {
 
     public init(
         styler: Styler,
-        options: DownOptions = .default //,
-//        listPrefixGeneratorBuilder: @escaping ListPrefixGeneratorBuilder = { StaticListItemPrefixGenerator(list: $0) }
+        options: DownOptions = .default,
+        listPrefixGeneratorBuilder: @escaping ListPrefixGeneratorBuilder = { StaticListItemPrefixGenerator(list: $0) }
     ) {
         self.styler = styler
         self.options = options
-//        self.listPrefixGeneratorBuilder = listPrefixGeneratorBuilder
+        self.listPrefixGeneratorBuilder = listPrefixGeneratorBuilder
     }
 
 }
@@ -65,8 +67,8 @@ extension AttributedStringVisitor: MarkupVisitor {
     }
 
     public mutating func visitOrderedList(_ node: OrderedList) -> NSMutableAttributedString {
-//        listPrefixGenerators.append(listPrefixGeneratorBuilder(node))
-//        defer { listPrefixGenerators.removeLast() }
+        listPrefixGenerators.append(listPrefixGeneratorBuilder(.ordered(node)))
+        defer { listPrefixGenerators.removeLast() }
 
         let items = visitChildren(node.children)
 
@@ -77,13 +79,13 @@ extension AttributedStringVisitor: MarkupVisitor {
     }
     
     public mutating func visitUnorderedList(_ node: UnorderedList) -> NSMutableAttributedString {
-//        listPrefixGenerators.append(listPrefixGeneratorBuilder(node))
-//        defer { listPrefixGenerators.removeLast() }
+        listPrefixGenerators.append(listPrefixGeneratorBuilder(.unordered(node)))
+        defer { listPrefixGenerators.removeLast() }
 
         let items = visitChildren(node.children)
 
         let result = items.joined
-//        if node.hasSuccessor { result.append(.paragraphSeparator) }
+        if node.hasSuccessor { result.append(.paragraphSeparator) }
         styler.style(list: result, nestDepth: /*node.nestDepth*/ 0)
         return result
     }
@@ -91,7 +93,7 @@ extension AttributedStringVisitor: MarkupVisitor {
     public mutating func visitListItem(_ node: ListItem) -> NSMutableAttributedString {
         let result = visitChildren(node.children).joined
 
-        let prefix = /*listPrefixGenerators.last?.next() ??*/ "•"
+        let prefix = listPrefixGenerators.last?.next() ?? "•"
         let attributedPrefix = "\(prefix)\t".attributed
         styler.style(listItemPrefix: attributedPrefix)
         result.insert(attributedPrefix, at: 0)
@@ -153,7 +155,7 @@ extension AttributedStringVisitor: MarkupVisitor {
 
     public func visitSoftBreak(_ node: SoftBreak) -> NSMutableAttributedString {
 //        let result = (options.contains(.hardBreaks) ? String.lineSeparator : " ").attributed
-        let result = String.lineSeparator.attributed
+        let result = " ".attributed
         styler.style(softBreak: result)
         return result
     }

@@ -1,6 +1,8 @@
 Document
-    ↳ Paragraph
-        ↳ Text - Text text.
-    ↳ Code Block - fenceInfo: nil, content: Code block\nCode block\n
-    ↳ Paragraph
-        ↳ Text - Text text.
+├─ Paragraph
+│  └─ Text "Text text."
+├─ CodeBlock language: none
+│  Code block
+│  Code block
+└─ Paragraph
+   └─ Text "Text text."
