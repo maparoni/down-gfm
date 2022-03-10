@@ -101,7 +101,14 @@ extension AttributedStringVisitor: MarkupVisitor {
     public mutating func visitListItem(_ node: ListItem) -> NSMutableAttributedString {
         let result = visitChildren(node.children).joined
 
-        let prefix = listPrefixGenerators.last?.next() ?? "•"
+        let prefix: String
+        if let checkbox = node.checkbox {
+            prefix = checkbox == .checked ? "☒" : "☐"
+        } else if let generated = listPrefixGenerators.last?.next() {
+            prefix = generated
+        } else {
+            prefix = "•"
+        }
         let attributedPrefix = "\(prefix)\t".attributed
         styler.style(listItemPrefix: attributedPrefix)
         result.insert(attributedPrefix, at: 0)
