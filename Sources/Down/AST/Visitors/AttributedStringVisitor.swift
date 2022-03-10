@@ -62,7 +62,15 @@ extension AttributedStringVisitor: MarkupVisitor {
     public mutating func visitBlockQuote(_ node: BlockQuote) -> NSMutableAttributedString {
         let result = visitChildren(node.children).joined
         if node.hasSuccessor { result.append(.paragraphSeparator) }
-        styler.style(blockQuote: result, nestDepth: /*node.nestDepth*/ 0)
+        
+        var nestDepth = 0
+        var parent = node.parent
+        while parent is BlockQuote {
+            nestDepth += 1
+            parent = parent?.parent
+        }
+        
+        styler.style(blockQuote: result, nestDepth: nestDepth)
         return result
     }
 
