@@ -74,10 +74,7 @@ class DownViewTests: XCTestCase {
     }
 
     func testInstantiationWithCustomTemplateBundle() {
-        guard
-            let bundle = Bundle.module.url(forResource: "TestDownView", withExtension: "bundle"),
-            let templateBundle = Bundle(url: bundle)
-        else {
+        guard let templateBundle = loadBundle(named: "TestDownView") else {
             XCTFail("Test template bundle not found in test target!")
             return
         }
@@ -105,11 +102,8 @@ class DownViewTests: XCTestCase {
         }
     }
 
-    func testInstantiationWithCustomWritableTemplateBundle() {
-        guard
-            let bundle = Bundle(for: type(of: self)).url(forResource: "TestDownView", withExtension: "bundle"),
-            let templateBundle = Bundle(url: bundle)
-        else {
+    func testInstantiationWithCustomWritableTemplateBundle() throws {
+        guard let templateBundle = loadBundle(named: "TestDownView") else {
             XCTFail("Test template bundle not found in test target!")
             return
         }
@@ -256,6 +250,21 @@ class DownViewTests: XCTestCase {
 }
 
 private extension DownViewTests {
+    
+    func loadBundle(named name: String) -> Bundle? {
+        #if SWIFT_PACKAGE
+        let thisSourceFile = URL(fileURLWithPath: #file)
+        let thisDirectory = thisSourceFile.deletingLastPathComponent()
+        let url = thisDirectory
+          .appendingPathComponent("Fixtures", isDirectory: true)
+          .appendingPathComponent(name).appendingPathExtension("bundle")
+        return Bundle(url: url)
+        #else
+        return Bundle(for: type(of: self))
+            .url(forResource: name, withExtension: "bundle")
+            .flatMap { Bundle(url: $0) }
+        #endif
+    }
 
     func _pageContents(for downView: DownView, completion: @escaping (_ htmlString: String?) -> Void) {
         downView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (html: Any?, _) in
