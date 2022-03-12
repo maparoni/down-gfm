@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 extension String {
 
-    /// Generates an HTML string from the contents of the string (self), which should contain CommonMark Markdown.
+    /// Generates an HTML string from the contents of the string (self), which should contain GitHub-Flavored Markdown.
     ///
     /// - Parameters:
     ///     - options: `DownOptions` to modify parsing or rendering, defaulting to `.default`.
@@ -22,7 +22,7 @@ extension String {
     ///     `DownErrors` depending on the scenario.
 
     public func toHTML(_ options: DownOptions = .default) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(self, options: options)
+        let ast = try DownASTRenderer.stringToNode(self, options: options)
         let html = try DownHTMLRenderer.astToHTML(ast, options: options)
         cmark_node_free(ast)
         return html

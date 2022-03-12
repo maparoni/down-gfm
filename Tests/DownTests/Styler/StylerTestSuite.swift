@@ -25,6 +25,8 @@ class StylerTestSuite: XCTestCase {
     override func setUp() {
         super.setUp()
         textContainerInset = .init(top: 8, left: 8, bottom: 8, right: 8)
+			
+				SnapshotTesting.diffTool = "ksdiff"
     }
 
     override func tearDown() {

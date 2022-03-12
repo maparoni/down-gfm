@@ -1,5 +1,5 @@
 Document
-    ↳ Paragraph
-        ↳ Text - Text text
-        ↳ Soft Break
-        ↳ Text - text text
+└─ Paragraph
+   ├─ Text "Text text"
+   ├─ SoftBreak
+   └─ Text "text text"

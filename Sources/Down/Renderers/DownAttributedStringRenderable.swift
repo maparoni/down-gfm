@@ -9,7 +9,7 @@
 #if !os(Linux)
 
 import Foundation
-import libcmark
+import Markdown
 
 public protocol DownAttributedStringRenderable: DownHTMLRenderable, DownASTRenderable {
 
@@ -63,9 +63,9 @@ extension DownAttributedStringRenderable {
     ///     `DownErrors` depending on the scenario.
 
     public func toAttributedString(_ options: DownOptions = .default, styler: Styler) throws -> NSAttributedString {
-        let document = try self.toDocument(options)
-        let visitor = AttributedStringVisitor(styler: styler, options: options)
-        return document.accept(visitor)
+        let document = self.toDocument(options)
+        var visitor = AttributedStringVisitor(styler: styler, options: options)
+        return document.accept(&visitor)
     }
 
 }

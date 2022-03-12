@@ -175,6 +175,10 @@ open class DownStyler: Styler {
         }
     }
 
+    open func style(strikethrough str: NSMutableAttributedString) {
+        str.addAttribute(for: .strikethroughStyle, value: NSNumber(value: NSUnderlineStyle.single.rawValue))
+    }
+
     open func style(strong str: NSMutableAttributedString) {
         str.updateExistingAttributes(for: .font) { (font: DownFont) in
             font.strong

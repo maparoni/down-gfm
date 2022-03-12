@@ -161,6 +161,13 @@ public protocol Styler {
 
     func style(emphasis str: NSMutableAttributedString)
 
+    /// Styles the content of the inline strikethrough node in the given string.
+    ///
+    /// - Parameters:
+    ///     - str: the strikethrough content.
+
+    func style(strikethrough str: NSMutableAttributedString)
+
     /// Styles the content of the inline strong node in the given string.
     ///
     /// - Parameters:

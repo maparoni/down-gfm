@@ -24,11 +24,11 @@ open class DownView: WKWebView {
 
     // MARK: - Life cycle
 
-    /// Initializes a web view with the results of rendering a CommonMark Markdown string.
+    /// Initializes a web view with the results of rendering a GitHub-Flavored Markdown string.
     ///
     /// - Parameters:
     ///     - frame: The frame size of the web view
-    ///     - markdownString: A string containing CommonMark Markdown
+    ///     - markdownString: A string containing GitHub-Flavored Markdown
     ///     - openLinksInBrowser: Whether or not to open links using an external browser
     ///     - templateBundle: Optional custom template bundle. Leaving this as `nil` will use the bundle included
     ///       with Down.
@@ -83,10 +83,10 @@ open class DownView: WKWebView {
 
     // MARK: - API
 
-    /// Renders the given CommonMark Markdown string into HTML and updates the DownView while keeping the style intact.
+    /// Renders the given GitHub-Flavored Markdown string into HTML and updates the DownView while keeping the style intact.
     ///
     /// - Parameters:
-    ///     - markdownString: A string containing CommonMark Markdown.
+    ///     - markdownString: A string containing GitHub-Flavored Markdown.
     ///     - options: `DownOptions` to modify parsing or rendering, defaulting to `.default`.
     ///     - didLoadSuccessfully: Optional callback for when the web content has loaded successfully.
     ///

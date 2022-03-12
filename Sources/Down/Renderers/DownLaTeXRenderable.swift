@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 public protocol DownLaTeXRenderable: DownRenderable {
 
@@ -30,7 +30,7 @@ extension DownLaTeXRenderable {
     ///     `DownErrors` depending on the scenario.
 
     public func toLaTeX(_ options: DownOptions = .default, width: Int32 = 0) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(markdownString, options: options)
+        let ast = try DownASTRenderer.stringToNode(markdownString, options: options)
         let latex = try DownLaTeXRenderer.astToLaTeX(ast, options: options, width: width)
         cmark_node_free(ast)
         return latex
@@ -55,9 +55,9 @@ public struct DownLaTeXRenderer {
     /// - Throws:
     ///     `ASTRenderingError` if the AST could not be converted.
 
-    public static func astToLaTeX(_ ast: CMarkNode,
-                                  options: DownOptions = .default,
-                                  width: Int32 = 0) throws -> String {
+    static func astToLaTeX(_ ast: UnsafeMutablePointer<cmark_node>,
+                           options: DownOptions = .default,
+                           width: Int32 = 0) throws -> String {
 
         guard let cLatexString = cmark_render_latex(ast, options.rawValue, width) else {
             throw DownErrors.astRenderingError
