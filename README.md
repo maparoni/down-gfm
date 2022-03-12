@@ -10,9 +10,13 @@
 [![Linux](https://img.shields.io/badge/OS-Linux-orange.svg)](https://www.linux.org/)
 [![Code Coverage](https://codecov.io/gh/johnxnguyen/Down/branch/master/graph/badge.svg)](https://codecov.io/gh/johnxnguyen/Down)
 
-Blazing fast rendering Markdown (Commonmark with selected GitHub-Flavored Markdown extensions) in Swift, built upon [cmark v0.28.3](https://github.com/github/cmark-gfm).
+Blazing fast rendering Markdown (GitHub-Flavored Markdown) in Swift, powered by:
 
-This is a fork of [`johnxnguyen/Down`](https://github.com/johnxnguyen/Down) from version 0.11.0.
+- [github/cmark-gfm](https://github.com/github/cmark-gfm)
+- [apple/swift-cmark](https://github.com/apple/swift-cmark)
+- [apple/swift-markdown](https://github.com/apple/swift-markdown)
+
+This is a fork of [`johnxnguyen/Down`](https://github.com/johnxnguyen/Down) from version 0.11.0, swapping the embedded cmark files for the above dependencies.
 
 #### Maintainers
 
@@ -41,13 +45,9 @@ This fork only maintains compatibility with Swift 5.5 and above, and the
 
 ### Differences to Down
 
+This fork swaps cmark for cmark-gfm, and supports the GFM-extensions, with the notable exception that **tables** are not supported when using NSAttributedString.
+
 For a full description of features, see [`johnxnguyen/Down`](https://github.com/johnxnguyen/Down).
-
-This fork swaps cmark for cmark-gfm, and supports the following extensions:
-
-- [x] Strikethrough
-- [x] Task lists
-- [ ] Tables
 
 ### Supports
 
@@ -55,14 +55,16 @@ Swift; iOS 13+, tvOS 13+, macOS 10.15+
 
 ### Markdown Specification
 
-Down is built upon the [CommonMark](http://commonmark.org) specification.
+down-gfm is built upon the [GitHub-Flavored Markdown](https://github.github.com/gfm/) specification.
 
 ### A little help from my friends
 
 Please feel free to fork and create a pull request for bug fixes or improvements, being sure to maintain the general coding style, adding tests, and adding comments as necessary.
 
-### Credit
+### Credits
 
-This library is a wrapper around [cmark](https://github.com/commonmark/cmark), which is built upon the [CommonMark](http://commonmark.org) Markdown specification.
-
-[cmark](https://github.com/commonmark/cmark) is Copyright (c) 2014, John MacFarlane. View [full license](https://github.com/commonmark/cmark/blob/master/COPYING).
+- [`johnxnguyen/Down`](https://github.com/johnxnguyen/Down)
+- [apple/swift-markdown](https://github.com/apple/swift-markdown)
+- [apple/swift-cmark](https://github.com/apple/swift-cmark)
+- [github/cmark-gfm](https://github.com/github/cmark-gfm)
+- [cmark](https://github.com/commonmark/cmark)
