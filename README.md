@@ -41,6 +41,7 @@ This fork only maintains compatibility with Swift 5.5 and above, and the
 [Swift Package Manager](https://github.com/apple/swift-package-manager).
 
 ```swift
+        .package(url: "https://github.com/maparoni/down-gfm.git", .branch("gfm")),
 ```
 
 ### Differences to Down
