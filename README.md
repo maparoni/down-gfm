@@ -1,8 +1,6 @@
 ## down-gfm
 
-[![Build Status](https://travis-ci.com/johnxnguyen/Down.svg?branch=master)](https://travis-ci.com/johnxnguyen/Down)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/johnxnguyen/Down/blob/master/LICENSE)
-[![CocoaPods](https://img.shields.io/cocoapods/v/Down)](https://cocoapods.org/pods/Down)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/maparoni/down-gfm/blob/master/LICENSE)
 [![Swift 5](https://img.shields.io/badge/language-Swift-blue.svg)](https://swift.org)
 [![macOS](https://img.shields.io/badge/OS-macOS-orange.svg)](https://developer.apple.com/macos/)
 [![iOS](https://img.shields.io/badge/OS-iOS-orange.svg)](https://developer.apple.com/ios/)
@@ -17,6 +15,11 @@ Blazing fast rendering Markdown (GitHub-Flavored Markdown) in Swift, powered by:
 - [apple/swift-markdown](https://github.com/apple/swift-markdown)
 
 This is a fork of [`johnxnguyen/Down`](https://github.com/johnxnguyen/Down) from version 0.11.0, swapping the embedded cmark files for the above dependencies.
+
+**WARNING: Currently missing from this fork, see #2:**
+- **Support for ordered lists that don't start at 1.**
+- **`DownOptions` that reflect cmark options**
+
 
 #### Maintainers
 
