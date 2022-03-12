@@ -1,6 +1,6 @@
 Document
-    ↳ Paragraph
-        ↳ Text - Text text.
-    ↳ Thematic Break
-    ↳ Paragraph
-        ↳ Text - Text text.
+├─ Paragraph
+│  └─ Text "Text text."
+├─ ThematicBreak
+└─ Paragraph
+   └─ Text "Text text."

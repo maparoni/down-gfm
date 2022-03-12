@@ -46,7 +46,7 @@ For a full description of features, see [`johnxnguyen/Down`](https://github.com/
 This fork swaps cmark for cmark-gfm, and supports the following extensions:
 
 - [x] Strikethrough
-- [ ] Task lists
+- [x] Task lists
 - [ ] Tables
 
 ### Supports

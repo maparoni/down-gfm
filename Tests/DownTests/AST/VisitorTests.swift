@@ -18,8 +18,8 @@ class VisitorTests: XCTestCase {
 
     func debugResult(for markdown: String) throws -> String {
         let down = Down(markdownString: markdown)
-        let document = try down.toDocument()
-        return document.accept(DebugVisitor())
+        let document = down.toDocument()
+        return document.debugDescription()
     }
 
     func testBlockQuote() throws {
@@ -185,7 +185,7 @@ class VisitorTests: XCTestCase {
     }
 }
 
-private class EmptyStyler: Styler {
+class EmptyStyler: Styler {
 
     var listPrefixAttributes: [NSAttributedString.Key: Any] = [:]
     func style(document str: NSMutableAttributedString) {}
@@ -209,5 +209,6 @@ private class EmptyStyler: Styler {
     func style(strong str: NSMutableAttributedString) {}
     func style(link str: NSMutableAttributedString, title: String?, url: String?) {}
     func style(image str: NSMutableAttributedString, title: String?, url: String?) {}
+    func style(strikethrough str: NSMutableAttributedString) {}
 
 }

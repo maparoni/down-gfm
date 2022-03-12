@@ -1,5 +1,5 @@
 Document
-    ↳ Paragraph
-        ↳ Text - Text text.
-        ↳ Line Break
-        ↳ Text - Text text.
+└─ Paragraph
+   ├─ Text "Text text."
+   ├─ LineBreak
+   └─ Text "Text text."

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import libcmark
+import cmark_gfm
 
 public protocol DownGroffRenderable: DownRenderable {
 
@@ -30,7 +30,7 @@ extension DownGroffRenderable {
     ///     `DownErrors` depending on the scenario.
 
     public func toGroff(_ options: DownOptions = .default, width: Int32 = 0) throws -> String {
-        let ast = try DownASTRenderer.stringToAST(markdownString, options: options)
+        let ast = try DownASTRenderer.stringToNode(markdownString, options: options)
         let groff = try DownGroffRenderer.astToGroff(ast, options: options, width: width)
         cmark_node_free(ast)
         return groff
@@ -55,9 +55,7 @@ public struct DownGroffRenderer {
     /// - Throws:
     ///     `ASTRenderingError` if the AST could not be converted.
 
-    public static func astToGroff(_ ast: CMarkNode,
-                                  options: DownOptions = .default,
-                                  width: Int32 = 0) throws -> String {
+    public static func astToGroff(_ ast: UnsafeMutablePointer<cmark_node>, options: DownOptions = .default, width: Int32 = 0) throws -> String {
 
         guard let cGroffString = cmark_render_man(ast, options.rawValue, width) else {
             throw DownErrors.astRenderingError

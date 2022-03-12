@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "cmark-gfm",
+        "repositoryURL": "https://github.com/apple/swift-cmark.git",
+        "state": {
+          "branch": "gfm",
+          "revision": "fce0dee92a10ec75b65ef4e9ca1b341db4c6d2ea",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-markdown",
+        "repositoryURL": "https://github.com/apple/swift-markdown.git",
+        "state": {
+          "branch": "main",
+          "revision": "caafc56d3794a08c2203fe417b3aff81e2ab2fc1",
+          "version": null
+        }
+      },
+      {
         "package": "SnapshotTesting",
         "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing.git",
         "state": {

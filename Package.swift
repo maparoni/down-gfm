@@ -16,27 +16,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
-            from: "1.9.0"
-        ),
+        .package(url: "https://github.com/apple/swift-markdown.git", .branch("main")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.9.0"),
     ],
     targets: [
         .target(
-            name: "libcmark",
-            dependencies: [],
-            path: "Sources/cmark",
-            exclude: [
-                "include",
-                "case_fold_switch.inc",
-                "entities.inc",
-                "COPYING"
-            ],
-            publicHeadersPath: "./"
-        ),
-        .target(
             name: "Down",
-            dependencies: ["libcmark"],
+            dependencies: [
+                .product(name: "Markdown", package: "swift-markdown")
+            ],
             path: "Sources/Down",
             exclude: ["Down.h"],
             resources: [

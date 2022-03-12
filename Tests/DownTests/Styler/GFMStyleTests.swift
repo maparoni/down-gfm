@@ -26,6 +26,16 @@ class GFMStyleTests: StylerTestSuite {
         assertStyle(for: markdown, width: .wide)
     }
 
+  func testThat_TaskList_IsStyled() {
+      // Given
+      let markdown = """
+      - [ ] Etiam vel dui id purus finibus auctor.
+      - [x] Donec in semper lectus.
+      """
+
+      // Then
+      assertStyle(for: markdown, width: .wide)
+  }
 }
 
 #endif
