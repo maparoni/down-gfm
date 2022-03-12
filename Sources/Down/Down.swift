@@ -10,13 +10,13 @@ import Foundation
 
 public struct Down: DownASTRenderable, DownHTMLRenderable, DownXMLRenderable,
                     DownLaTeXRenderable, DownGroffRenderable, DownCommonMarkRenderable {
-    /// A string containing CommonMark Markdown
+    /// A string containing GitHub-Flavored Markdown
     public var markdownString: String
 
-    /// Initializes the container with a CommonMark Markdown string which can then be
+    /// Initializes the container with a GitHub-Flavored Markdown string which can then be
     /// rendered depending on protocol conformance.
     ///
-    /// - Parameter markdownString: A string containing CommonMark Markdown
+    /// - Parameter markdownString: A string containing GitHub-Flavored Markdown
     public init(markdownString: String) {
         self.markdownString = markdownString
     }

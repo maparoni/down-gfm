@@ -54,12 +54,12 @@ extension DownASTRenderable {
 
 public struct DownASTRenderer {
 
-    /// Generates an abstract syntax tree from the given CommonMark Markdown string.
+    /// Generates an abstract syntax tree from the given GitHub-Flavored Markdown string.
     ///
     /// **Important:** It is the caller's responsibility to call `cmark_node_free(ast)` on the returned value.
     ///
     /// - Parameters:
-    ///     - string: A string containing CommonMark Markdown.
+    ///     - string: A string containing GitHub-Flavored Markdown.
     ///     - options: `DownOptions` to modify parsing or rendering, defaulting to `.default`.
     ///
     /// - Returns:

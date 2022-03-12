@@ -11,7 +11,7 @@ import cmark_gfm
 
 extension String {
 
-    /// Generates an HTML string from the contents of the string (self), which should contain CommonMark Markdown.
+    /// Generates an HTML string from the contents of the string (self), which should contain GitHub-Flavored Markdown.
     ///
     /// - Parameters:
     ///     - options: `DownOptions` to modify parsing or rendering, defaulting to `.default`.

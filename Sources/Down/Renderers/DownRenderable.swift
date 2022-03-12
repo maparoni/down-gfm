@@ -10,7 +10,7 @@ import Foundation
 
 public protocol DownRenderable {
 
-    /// A string containing CommonMark Markdown.
+    /// A string containing GitHub-Flavored Markdown.
 
     var markdownString: String { get set }
 
