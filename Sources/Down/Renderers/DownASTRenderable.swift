@@ -90,8 +90,11 @@ public struct DownASTRenderer {
         ext = cmark_find_syntax_extension("tasklist")
         cmark_parser_attach_syntax_extension(parser, ext)
 
-        ext = cmark_find_syntax_extension("table")
-        cmark_parser_attach_syntax_extension(parser, ext)
+        if options.contains(.enableTables) {
+            // Opt-in as not supported by NSAttribtedString on iOS
+            ext = cmark_find_syntax_extension("table")
+            cmark_parser_attach_syntax_extension(parser, ext)
+        }
         
         var tree: UnsafeMutablePointer<cmark_node>?
         

@@ -20,7 +20,11 @@ public struct DownOptions: OptionSet {
     public init(rawValue: Int32) { self.rawValue = rawValue }
 
     /// Default options.
-
     public static let `default` = DownOptions(rawValue: 0)
 
+    // MARK: - Parsing Options
+    
+    /// Enable GFM table extension
+    /// - warning: Not supported by NSAttributedString on iOS
+    public static let enableTables = DownOptions(rawValue: 1 << 30)
 }
